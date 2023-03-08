@@ -6,6 +6,7 @@ using Autofac;
 using System.Security.Claims;
 using Infrastructure.HttpClient;
 using Application.Commom.Interfaces;
+using Application.Features.ProductCategories;
 
 namespace Infrastructure;
 
@@ -19,8 +20,14 @@ public class DefaultInfrastructureModule : Module
              .AsImplementedInterfaces()
              .InstancePerLifetimeScope();
 
-        builder.RegisterType<ProductService>()
-              .As<IProductService>()
-              .InstancePerLifetimeScope();
+        builder
+            .RegisterType<ProductService>()
+            .As<IProductService>()
+            .InstancePerLifetimeScope();
+
+        builder
+            .RegisterType<ProductCategoryService>()
+            .As<IProductCategoryService>()
+            .InstancePerLifetimeScope();
     }
 }

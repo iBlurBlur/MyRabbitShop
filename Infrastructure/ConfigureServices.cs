@@ -19,6 +19,9 @@ public static class ConfigureServices
         services.AddRefitClient<IProductAPIClient>()
             .ConfigureHttpClient(c => c.BaseAddress = new Uri("https://localhost:7188"));
 
+        services.AddRefitClient<IProductCategoryAPIClient>()
+           .ConfigureHttpClient(c => c.BaseAddress = new Uri("https://localhost:7188"));
+
         return services;
     }
 }
