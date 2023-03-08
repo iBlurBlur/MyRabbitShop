@@ -17,10 +17,10 @@ public static class ConfigureServices
         var productAPIURL = configuration.GetValue<string>("ProductEndpoint");
 
         services.AddRefitClient<IProductAPIClient>()
-            .ConfigureHttpClient(c => c.BaseAddress = new Uri("https://localhost:7188"));
+            .ConfigureHttpClient(c => c.BaseAddress = new Uri(productAPIURL!));
 
         services.AddRefitClient<IProductCategoryAPIClient>()
-           .ConfigureHttpClient(c => c.BaseAddress = new Uri("https://localhost:7188"));
+           .ConfigureHttpClient(c => c.BaseAddress = new Uri(productAPIURL!));
 
         return services;
     }
