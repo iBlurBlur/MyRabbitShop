@@ -1,0 +1,9 @@
+﻿@page
+@model Web.Pages.Product.IndexModel
+@{
+    <h1>Hello cat</h1>
+}
+
+@foreach(var product in Model.Products){
+    <h1>@product.Name</h1>
+}
