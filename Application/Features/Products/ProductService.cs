@@ -1,4 +1,5 @@
 ﻿using Application.Commom.Interfaces;
+using Application.Common.Interfaces;
 using Application.Features.Products.Models;
 using System;
 using System.Collections.Generic;
@@ -6,15 +7,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Infrastructure.HttpClient;
+namespace Application.Features.Products;
 
-public class ProductAPIClient : IProductAPI
+public class ProductService : IProductService
 {
-    private readonly IProductAPIClient _productAPIClient;
+    private readonly IProductAPI _productAPI;
 
-    public ProductAPIClient(IProductAPIClient productAPIClient)
+    public ProductService(IProductAPI productAPI)
     {
-        this._productAPIClient = productAPIClient;
+        this._productAPI = productAPI;
     }
 
     public Task AddProduct(CreateProductDTO createProductDTO)
@@ -49,6 +50,6 @@ public class ProductAPIClient : IProductAPI
 
     public async Task<IEnumerable<ProductResponseDTO>> GetProducts()
     {
-        return await _productAPIClient.GetProducts();
+       return await _productAPI.GetProducts();
     }
 }

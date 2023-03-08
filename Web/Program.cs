@@ -1,7 +1,23 @@
+using Application.Common.Interfaces;
+using Application.Features.Products;
+using Module = Autofac.Module;
+using System.Reflection;
+using Autofac;
+using Infrastructure;
+using Autofac.Extensions.DependencyInjection;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+
+builder.Services.AddInfrastructureServices(builder.Configuration);
+
+builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
+builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder =>
+{
+    containerBuilder.RegisterModule(new DefaultInfrastructureModule());
+});
 
 var app = builder.Build();
 
