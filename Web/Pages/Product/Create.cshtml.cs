@@ -37,7 +37,26 @@ namespace Web.Pages.Product
                 SetupDropdown();
                 return Page();
             }
-            await _productService.AddProduct(CreateProductViewModel.Adapt<CreateProductDTO>());
+
+            IFormFile? upload = CreateProductViewModel.UploadFile;
+            if (upload != null)
+            {
+                await _productService.AddProduct(
+                    CreateProductViewModel.ProductNumber,
+                    CreateProductViewModel.Name,
+                    CreateProductViewModel.Color!,
+                    CreateProductViewModel.Price,
+                    CreateProductViewModel.Size!,
+                    CreateProductViewModel.Weight,
+                    $"{Guid.NewGuid()}.{Path.GetExtension(upload.FileName)}",
+                    upload.OpenReadStream(),
+                    CreateProductViewModel.CategoryId);
+            }
+            else
+            {
+                await _productService.AddProduct(CreateProductViewModel.Adapt<CreateProductDTO>());
+            }
+
             return RedirectToPage("Index");
         }
 
