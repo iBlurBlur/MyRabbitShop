@@ -16,7 +16,7 @@ namespace Web.Pages.Product
         private readonly IProductService _productService;
 
         [BindProperty]
-        public CreateProductViewModel CreateProductViewModel { get; set; } = new CreateProductViewModel();
+        public EditProductViewModel CreateProductViewModel { get; set; } = new EditProductViewModel();
 
         public IEnumerable<SelectListItem>? SelectListProductCategories { get; set; }
 
@@ -42,12 +42,12 @@ namespace Web.Pages.Product
             if (upload != null)
             {
                 await _productService.AddProduct(
-                    CreateProductViewModel.ProductNumber,
-                    CreateProductViewModel.Name,
-                    CreateProductViewModel.Color!,
-                    CreateProductViewModel.Price,
-                    CreateProductViewModel.Size!,
-                    CreateProductViewModel.Weight,
+                    (string)CreateProductViewModel.ProductNumber,
+                    (string)CreateProductViewModel.Name,
+                    (string)CreateProductViewModel.Color!,
+                    (decimal)CreateProductViewModel.Price,
+                    (string)CreateProductViewModel.Size!,
+                    (decimal?)CreateProductViewModel.Weight,
                     $"{Guid.NewGuid()}.{Path.GetExtension(upload.FileName)}",
                     upload.OpenReadStream(),
                     CreateProductViewModel.CategoryId);
