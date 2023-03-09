@@ -20,7 +20,13 @@ namespace Web.Pages.Product
 
         public async Task OnGet()
         {
-            Products = await _productService.GetProducts();
+            Products = await _productService.GetProducts();  
+        }
+
+        public async Task<IActionResult> OnGetDelete(int id)
+        {
+            await _productService.DeleteProduct(id);
+            return RedirectToPage();
         }
     }
 }
