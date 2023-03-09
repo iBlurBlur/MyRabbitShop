@@ -18,38 +18,57 @@ public class ProductService : IProductService
         this._productAPI = productAPI;
     }
 
-    public Task AddProduct(CreateProductDTO createProductDTO)
+    public async Task AddProduct(CreateProductDTO createProductDTO)
     {
-        throw new NotImplementedException();
+        await _productAPI.AddProduct(createProductDTO);
     }
 
-    public Task AddProduct(string productNumber, string name, string color, decimal price, string size, decimal? weight, string thumbnailPhotoFileName, Stream uploadFile, int productCategoryId)
+    public async Task AddProduct(string productNumber, string name, string color, decimal price, string size, decimal? weight, string thumbnailPhotoFileName, Stream uploadFile, int productCategoryId)
     {
-        throw new NotImplementedException();
+        await _productAPI.AddProduct(productNumber,
+            name,
+            color,
+            price,
+            size,
+            weight,
+            thumbnailPhotoFileName,
+            uploadFile,
+            productCategoryId);
     }
 
-    public Task DeleteProduct(int id)
+    public async Task DeleteProduct(int id)
     {
-        throw new NotImplementedException();
+        await _productAPI.DeleteProduct(id);
     }
 
-    public Task EditProduct(int id, EditProductDTO editProductDTO)
+    public async Task EditProduct(int id, EditProductDTO editProductDTO)
     {
-        throw new NotImplementedException();
+        await _productAPI.EditProduct(id, editProductDTO);
     }
 
-    public Task EditProduct(int id, int productId, string productNumber, string name, string color, decimal price, string size, decimal? weight, string thumbnailPhotoFileName, Stream uploadFile, int productCategoryId)
+    public async Task EditProduct(int id, int productId, string productNumber, string name, string color, decimal price, string size, decimal? weight, string thumbnailPhotoFileName, Stream uploadFile, int productCategoryId)
     {
-        throw new NotImplementedException();
+        await _productAPI.EditProduct(
+            id,
+            productId,
+            productNumber,
+            name,
+            color,
+            price,
+            size,
+            weight,
+            thumbnailPhotoFileName,
+            uploadFile,
+            productCategoryId);
     }
 
-    public Task<ProductResponseDTO?> GetProductByID(int id)
+    public async Task<ProductResponseDTO?> GetProductByID(int id)
     {
-        throw new NotImplementedException();
+        return await _productAPI.GetProductByID(id);
     }
 
     public async Task<IEnumerable<ProductResponseDTO>> GetProducts()
     {
-       return await _productAPI.GetProducts();
+        return await _productAPI.GetProducts();
     }
 }

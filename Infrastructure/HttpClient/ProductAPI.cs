@@ -1,6 +1,7 @@
 ﻿using Application.Commom.Interfaces;
 using Application.Features.Products.Models;
 using Infrastructure.HttpClient;
+using Refit;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,43 +15,48 @@ public class ProductAPI : IProductAPI
 {
     private readonly IProductAPIClient _productAPIClient;
 
-    public ProductAPI(IProductAPIClient productAPIClient)
-    {
-        this._productAPIClient = productAPIClient;
-    }
+    public ProductAPI(IProductAPIClient productAPIClient) => _productAPIClient = productAPIClient;
 
-    public Task AddProduct(CreateProductDTO createProductDTO)
-    {
-        throw new NotImplementedException();
-    }
+    public async Task<IEnumerable<ProductResponseDTO>> GetProducts() =>
+        await _productAPIClient.GetProducts();
 
-    public Task AddProduct(string productNumber, string name, string color, decimal price, string size, decimal? weight, string thumbnailPhotoFileName, Stream uploadFile, int productCategoryId)
-    {
-        throw new NotImplementedException();
-    }
+    public async Task<ProductResponseDTO?> GetProductByID(int id) =>
+        await _productAPIClient.GetProductByID(id);
 
-    public Task DeleteProduct(int id)
-    {
-        throw new NotImplementedException();
-    }
+    public async Task DeleteProduct(int id) =>
+        await _productAPIClient.DeleteProduct(id);
 
-    public Task EditProduct(int id, EditProductDTO editProductDTO)
-    {
-        throw new NotImplementedException();
-    }
+    public async Task AddProduct(string productNumber, string name, string color, decimal price, string size, decimal? weight, string thumbnailPhotoFileName, Stream uploadFile, int productCategoryId) =>
+        await _productAPIClient.AddProduct(
+            productNumber,
+            name,
+            color,
+            price,
+            size,
+            weight,
+            thumbnailPhotoFileName,
+            new StreamPart(uploadFile, thumbnailPhotoFileName),
+            productCategoryId
+        );
 
-    public Task EditProduct(int id, int productId, string productNumber, string name, string color, decimal price, string size, decimal? weight, string thumbnailPhotoFileName, Stream uploadFile, int productCategoryId)
-    {
-        throw new NotImplementedException();
-    }
+    public async Task AddProduct([Body(BodySerializationMethod.UrlEncoded)] CreateProductDTO createProductDTO) =>
+        await _productAPIClient.AddProduct(createProductDTO);
 
-    public Task<ProductResponseDTO?> GetProductByID(int id)
-    {
-        throw new NotImplementedException();
-    }
+    public async Task EditProduct(int id, [Body(BodySerializationMethod.UrlEncoded)] EditProductDTO editProductDTO) =>
+          await _productAPIClient.EditProduct(id, editProductDTO);
 
-    public async Task<IEnumerable<ProductResponseDTO>> GetProducts()
-    {
-        return await _productAPIClient.GetProducts();
-    }
+    public async Task EditProduct(int id, int productId, string productNumber, string name, string color, decimal price, string size, decimal? weight, string thumbnailPhotoFileName, Stream uploadFile, int productCategoryId) =>
+     await _productAPIClient.EditProduct(
+         id,
+         productId,
+         productNumber,
+         name,
+         color,
+         price,
+         size,
+         weight,
+         thumbnailPhotoFileName,
+         new StreamPart(uploadFile, thumbnailPhotoFileName),
+         productCategoryId
+     );
 }
